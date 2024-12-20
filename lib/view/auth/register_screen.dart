@@ -118,4 +118,22 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  
+  Widget _buildTextField(String label, IconData icon,
+      {bool isPassword = false}) {
+    return TextField(
+      obscureText: isPassword,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white.withOpacity(0.2),
+        labelText: label,
+        labelStyle: const TextStyle(color: Colors.white),
+        prefixIcon: Icon(icon, color: Colors.white),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide.none,
+        ),
+      ),
+    );
+  }
+}
