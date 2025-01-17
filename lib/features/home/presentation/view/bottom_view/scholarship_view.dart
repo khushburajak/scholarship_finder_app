@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CourseView extends StatelessWidget {
-  const CourseView({super.key});
+class ScholarshipView extends StatelessWidget {
+  const ScholarshipView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        'Course View',
+        'scholarship View',
         style: TextStyle(fontSize: 30),
       ),
     );

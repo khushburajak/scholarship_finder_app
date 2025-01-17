@@ -7,4 +7,6 @@ class HomeCubit extends Cubit<HomeState> {
   void onTabTapped(int index) {
     emit(state.copyWith(selectedIndex: index));
   }
+
+  void logout() {}
 }

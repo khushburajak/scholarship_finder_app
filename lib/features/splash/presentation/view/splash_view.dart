@@ -19,7 +19,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[50],
+      backgroundColor: const Color.fromARGB(255, 60, 139, 224),
       body: Stack(
         children: [
           Center(
@@ -42,14 +42,6 @@ class _SplashViewState extends State<SplashView> {
                 const SizedBox(height: 10),
                 const Text('version : 1.0.0')
               ],
-            ),
-          ),
-          Positioned(
-            bottom: 10,
-            left: MediaQuery.of(context).size.width / 4,
-            child: const Text(
-              'Developed by: Khatra Sir le',
-              style: TextStyle(fontSize: 15),
             ),
           ),
         ],

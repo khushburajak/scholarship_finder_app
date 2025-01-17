@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scholarshuip_finder_app/app/di/di.dart';
-  
+
 class HomeState extends Equatable {
   final int selectedIndex;
   final List<Widget> views;
@@ -19,6 +17,12 @@ class HomeState extends Equatable {
       views: [
         const Center(
           child: Text('Dashboard'),
+        ),
+        const Center(
+          child: Text('Scholarship'),
+        ),
+        const Center(
+          child: Text('Universities'),
         ),
         const Center(
           child: Text('Account'),

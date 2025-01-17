@@ -26,7 +26,6 @@ class HomeView extends StatelessWidget {
                 color: Colors.red,
               );
 
-              //   context.read<HomeCubit>().logout();
             },
           ),
           Switch(
@@ -53,12 +52,12 @@ class HomeView extends StatelessWidget {
                 label: 'Dashboard',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.book),
-                label: 'Course',
+                icon: Icon(Icons.request_page),
+                label: 'scholarships',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.group),
-                label: 'Batch',
+                icon: Icon(Icons.school),
+                label: 'Universities',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle),
