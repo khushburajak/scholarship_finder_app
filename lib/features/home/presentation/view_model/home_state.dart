@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:scholarshuip_finder_app/features/home/presentation/view/bottom_view/dashboard_view.dart';
 
 class HomeState extends Equatable {
   final int selectedIndex;
@@ -16,7 +17,7 @@ class HomeState extends Equatable {
       selectedIndex: 0,
       views: [
         const Center(
-          child: Text('Dashboard'),
+          child: HomePage(),
         ),
         const Center(
           child: Text('Scholarship'),
