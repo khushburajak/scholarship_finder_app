@@ -7,6 +7,38 @@ import 'package:scholarshuip_finder_app/features/home/presentation/view_model/ho
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
+  void _profileOptions(BuildContext context) {
+    // For example, you can navigate to profile page, logout.
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Wrap(
+          children: <Widget>[
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/profile');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () {
+                Navigator.pop(context);
+                // Add your logout logic here
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Logged out successfully')),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   final bool _isDarkTheme = false;
 
   @override
@@ -14,28 +46,21 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-        centerTitle: true,
+        centerTitle: false,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              // Logout code
-              showMySnackBar(
-                context: context,
-                message: 'Logging out...',
-                color: Colors.red,
-              );
-
-            },
-          ),
-          Switch(
-            value: _isDarkTheme,
-            onChanged: (value) {
-              // Change theme
-              // setState(() {
-              //   _isDarkTheme = value;
-              // });
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child:
+                // profile image and on tap navigate to profile page
+                GestureDetector(
+              onTap: () {
+                // open dropdown for profile options
+                _profileOptions(context);
+              },
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/images/profile.png'),
+              ),
+            ),
           ),
         ],
       ),
