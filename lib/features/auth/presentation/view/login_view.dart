@@ -7,128 +7,165 @@ class LoginView extends StatelessWidget {
   LoginView({super.key});
 
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController(text: 'kiran');
-  final _passwordController = TextEditingController(text: 'kiran123');
-
-  final _gap = const SizedBox(height: 8);
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    const Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontFamily: 'Brand Bold',
-                      ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Brand or App Logo
+                  Center(
+                    child: Image.asset(
+                      'assets/images/splash.jpg', // Replace with your app's logo
+                      height: 100,
                     ),
-                    _gap,
-                    TextFormField(
-                      key: const ValueKey('username'),
-                      controller: _usernameController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Username',
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter username';
-                        }
-                        return null;
-                      },
+                  ),
+                  const SizedBox(height: 24),
+                  // Title
+                  const Text(
+                    'Welcome Back!',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
                     ),
-                    _gap,
-                    TextFormField(
-                      key: const ValueKey('password'),
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                      ),
-                      validator: ((value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter password';
-                        }
-                        return null;
-                      }),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Please login to continue.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
                     ),
-                    _gap,
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          context.read<LoginBloc>().add(
-                                LoginStudentEvent(
-                                  context: context,
-                                  username: _usernameController.text,
-                                  password: _passwordController.text,
-                                ),
-                              );
-
-                          //   if (_usernameController.text == 'kiran' &&
-                          //       _passwordController.text == 'kiran123') {
-                          //     context.read<LoginBloc>().add(
-                          //           NavigateHomeScreenEvent(
-                          //             destination: HomeView(),
-                          //             context: context,
-                          //           ),
-                          //         );
-                          //   } else {
-                          //     showMySnackBar(
-                          //       context: context,
-                          //       message: 'Invalid username or password',
-                          //       color: Colors.red,
-                          //     );
-                          //   }
-                        }
-                      },
-                      child: const SizedBox(
-                        height: 50,
-                        child: Center(
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'Brand Bold',
+                  ),
+                  const SizedBox(height: 32),
+                  // Login Form
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        // Username Field
+                        TextFormField(
+                          key: const ValueKey('username'),
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            labelText: 'Username',
+                            prefixIcon: const Icon(Icons.person_outline),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your username';
+                            }
+                            return null;
+                          },
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    ElevatedButton(
-                      key: const ValueKey('registerButton'),
-                      onPressed: () {
-                        context.read<LoginBloc>().add(
-                              NavigateRegisterScreenEvent(
-                                destination: RegisterView(),
-                                context: context,
+                        const SizedBox(height: 16),
+                        // Password Field
+                        TextFormField(
+                          key: const ValueKey('password'),
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            prefixIcon: const Icon(Icons.lock_outline),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        // Login Button
+                        SizedBox(
+                          width: size.width,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                context.read<LoginBloc>().add(
+                                      LoginStudentEvent(
+                                        context: context,
+                                        username: _usernameController.text,
+                                        password: _passwordController.text,
+                                      ),
+                                    );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                            );
-                      },
-                      child: const SizedBox(
-                        height: 50,
-                        child: Center(
-                          child: Text(
-                            'Register',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'Brand Bold',
+                            ),
+                            child: const Text(
+                              'Login',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // Forgot Password
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        // Implement Forgot Password Navigation
+                      },
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 24),
+                  // Register Option
+                  Center(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterView(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Don\'t have an account? Register',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

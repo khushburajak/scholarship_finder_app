@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scholarshuip_finder_app/app/constants/theme_constant.dart';
 
 class AppTheme {
   AppTheme._();
@@ -9,10 +8,10 @@ class AppTheme {
       // change the theme according to the user preference
       colorScheme: isDarkMode
           ? const ColorScheme.dark(
-              primary: ThemeConstant.darkPrimaryColor,
+              primary: Color.fromARGB(255, 226, 59, 255),
             )
           : const ColorScheme.light(
-              primary: Color.fromARGB(255, 17, 119, 20),
+              primary: Color.fromARGB(255, 17, 37, 119),
             ),
       brightness: isDarkMode ? Brightness.dark : Brightness.light,
       fontFamily: 'Montserrat',
@@ -21,7 +20,7 @@ class AppTheme {
       // Change app bar color
       appBarTheme: const AppBarTheme(
         elevation: 0,
-        backgroundColor: ThemeConstant.appBarColor,
+        backgroundColor: Color.fromARGB(255, 84, 76, 175),
         centerTitle: true,
         titleTextStyle: TextStyle(
           color: Colors.white,
@@ -34,7 +33,7 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           elevation: 0,
           foregroundColor: Colors.white,
-          backgroundColor: ThemeConstant.primaryColor,
+          backgroundColor: const Color.fromARGB(255, 79, 76, 175),
           textStyle: const TextStyle(
             fontSize: 20,
           ),
@@ -53,22 +52,22 @@ class AppTheme {
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.red,
+            color: Color.fromARGB(255, 247, 33, 18),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: ThemeConstant.primaryColor,
+            color: Color.fromARGB(255, 76, 91, 175),
           ),
         ),
       ),
       // Circular progress bar theme
       progressIndicatorTheme: const ProgressIndicatorThemeData(
-        color: ThemeConstant.primaryColor,
+        color: Color.fromARGB(255, 76, 86, 175),
       ),
       //Bottom navigation bar theme
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Color.fromARGB(255, 74, 96, 195),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.black,
         type: BottomNavigationBarType.fixed,
