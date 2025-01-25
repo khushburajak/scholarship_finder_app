@@ -19,21 +19,23 @@ import 'package:scholarshuip_finder_app/features/course/domain/use_case/delete_c
 import 'package:scholarshuip_finder_app/features/course/domain/use_case/get_all_course_usecase.dart';
 import 'package:scholarshuip_finder_app/features/course/presentation/view_model/course_bloc.dart';
 import 'package:scholarshuip_finder_app/features/home/presentation/view_model/home_cubit.dart';
+import 'package:scholarshuip_finder_app/features/onboarding/presentation/view_model/onboarding_cubit.dart';
 import 'package:scholarshuip_finder_app/features/splash/presentation/view_model/splash_cubit.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
-  // First initialize hive service
+  // Initialize hive service
   await _initHiveService();
 
+  // Initialize feature-specific dependencies
   await _initBatchDependencies();
   await _initCourseDependencies();
   await _initHomeDependencies();
   await _initRegisterDependencies();
   await _initLoginDependencies();
-
   await _initSplashScreenDependencies();
+  await _initOnboardingDependencies(); // Add onboarding dependencies
 }
 
 _initHiveService() {
@@ -41,21 +43,16 @@ _initHiveService() {
 }
 
 _initRegisterDependencies() {
-  // init local data source
   getIt.registerLazySingleton(
     () => AuthLocalDataSource(getIt<HiveService>()),
   );
 
-  // init local repository
   getIt.registerLazySingleton(
     () => AuthLocalRepository(getIt<AuthLocalDataSource>()),
   );
 
-  // register use usecase
   getIt.registerLazySingleton<RegisterUseCase>(
-    () => RegisterUseCase(
-      getIt<AuthLocalRepository>(),
-    ),
+    () => RegisterUseCase(getIt<AuthLocalRepository>()),
   );
 
   getIt.registerFactory<RegisterBloc>(
@@ -68,16 +65,15 @@ _initRegisterDependencies() {
 }
 
 _initCourseDependencies() {
-  // Data Source
   getIt.registerFactory<CourseLocalDataSource>(
-      () => CourseLocalDataSource(hiveService: getIt<HiveService>()));
+    () => CourseLocalDataSource(hiveService: getIt<HiveService>()),
+  );
 
-  // Repository
-  getIt.registerLazySingleton<CourseLocalRepository>(() =>
-      CourseLocalRepository(
-          courseLocalDataSource: getIt<CourseLocalDataSource>()));
+  getIt.registerLazySingleton<CourseLocalRepository>(
+    () => CourseLocalRepository(
+        courseLocalDataSource: getIt<CourseLocalDataSource>()),
+  );
 
-  // Usecases
   getIt.registerLazySingleton<CreateCourseUsecase>(
     () => CreateCourseUsecase(
       courseRepository: getIt<CourseLocalRepository>(),
@@ -96,8 +92,6 @@ _initCourseDependencies() {
     ),
   );
 
-  // Bloc
-
   getIt.registerFactory<CourseBloc>(
     () => CourseBloc(
       getAllCourseUsecase: getIt<GetAllCourseUsecase>(),
@@ -108,15 +102,15 @@ _initCourseDependencies() {
 }
 
 _initBatchDependencies() async {
-  // Data Source
   getIt.registerFactory<BatchLocalDataSource>(
-      () => BatchLocalDataSource(hiveService: getIt<HiveService>()));
+    () => BatchLocalDataSource(hiveService: getIt<HiveService>()),
+  );
 
-  // Repository
-  getIt.registerLazySingleton<BatchLocalRepository>(() => BatchLocalRepository(
-      batchLocalDataSource: getIt<BatchLocalDataSource>()));
+  getIt.registerLazySingleton<BatchLocalRepository>(
+    () => BatchLocalRepository(
+        batchLocalDataSource: getIt<BatchLocalDataSource>()),
+  );
 
-  // Usecases
   getIt.registerLazySingleton<CreateBatchUseCase>(
     () => CreateBatchUseCase(batchRepository: getIt<BatchLocalRepository>()),
   );
@@ -129,7 +123,6 @@ _initBatchDependencies() async {
     () => DeleteBatchUsecase(batchRepository: getIt<BatchLocalRepository>()),
   );
 
-  // Bloc
   getIt.registerFactory<BatchBloc>(
     () => BatchBloc(
       createBatchUseCase: getIt<CreateBatchUseCase>(),
@@ -147,9 +140,7 @@ _initHomeDependencies() async {
 
 _initLoginDependencies() async {
   getIt.registerLazySingleton<LoginUseCase>(
-    () => LoginUseCase(
-      getIt<AuthLocalRepository>(),
-    ),
+    () => LoginUseCase(getIt<AuthLocalRepository>()),
   );
 
   getIt.registerFactory<LoginBloc>(
@@ -163,6 +154,12 @@ _initLoginDependencies() async {
 
 _initSplashScreenDependencies() async {
   getIt.registerFactory<SplashCubit>(
-    () => SplashCubit(getIt<LoginBloc>()),
+    () => SplashCubit(getIt<OnboardingCubit>()),
+  );
+}
+
+_initOnboardingDependencies() async {
+  getIt.registerFactory<OnboardingCubit>(
+    () => OnboardingCubit(),
   );
 }
