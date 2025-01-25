@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scholarshuip_finder_app/features/onboarding/presentation/view_model/onboarding_cubit.dart';
+import 'package:scholarshuip_finder_app/features/auth/presentation/view/login_view.dart';
+import 'package:scholarshuip_finder_app/features/onboarding/presentation/view_model/onboarding_bloc.dart';
+import 'package:scholarshuip_finder_app/features/onboarding/presentation/view_model/onboarding_event.dart';
+import 'package:scholarshuip_finder_app/features/onboarding/presentation/view_model/onboarding_state.dart';
 
-class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => OnboardingCubit(),
-      child: const OnboardingView(),
-    );
-  }
-}
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({Key? key}) : super(key: key);
@@ -22,15 +14,23 @@ class OnboardingView extends StatelessWidget {
     final pageController = PageController();
 
     return Scaffold(
-      body: BlocBuilder<OnboardingCubit, OnboardingState>(
+      body: BlocConsumer<OnboardingBloc, OnboardingState>(
+        listener: (context, state) {
+          if (state.navigateToLogin) {
+            // Navigate to login when `navigateToLogin` is true
+            Navigator.pushReplacementNamed(context, '/login');
+          }
+        },
         builder: (context, state) {
           return Column(
             children: [
               Expanded(
                 child: PageView(
                   controller: pageController,
-                  onPageChanged: (index) =>
-                      context.read<OnboardingCubit>().changePage(index),
+                  onPageChanged: (index) {
+                    // Trigger page change event
+                    context.read<OnboardingBloc>().add(ChangePageEvent(index));
+                  },
                   children: const [
                     OnboardingPage(
                       title: "Welcome",
@@ -58,8 +58,11 @@ class OnboardingView extends StatelessWidget {
                     // Skip Button
                     TextButton(
                       onPressed: () {
-                        // Navigate to the next screen (e.g., Login/SignUp)
-                        Navigator.pushReplacementNamed(context, '/login');
+                        // Trigger navigation to login
+                        context.read<OnboardingBloc>().add(NavigateToLoginEvent(
+                              context: context,
+                              destination: LoginView(),
+                            ));
                       },
                       child: const Text("Skip"),
                     ),
@@ -67,10 +70,18 @@ class OnboardingView extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         if (state.currentPage == 2) {
-                          // If it's the last page, navigate to the next screen
-                          Navigator.pushReplacementNamed(context, '/login');
+                          // Trigger navigation to login when on the last page
+                          context
+                              .read<OnboardingBloc>()
+                              .add(NavigateToLoginEvent(
+                                context: context,
+                                destination: LoginView(),
+                              ));
                         } else {
-                          // Move to the next page
+                          // Trigger page change event
+                          context
+                              .read<OnboardingBloc>()
+                              .add(ChangePageEvent(state.currentPage + 1));
                           pageController.nextPage(
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,

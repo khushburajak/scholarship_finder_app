@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:scholarshuip_finder_app/features/batch/domain/entity/batch_entity.dart';
-import 'package:scholarshuip_finder_app/features/course/domain/entity/course_entity.dart';
 
 class AuthEntity extends Equatable {
   final String? userId;

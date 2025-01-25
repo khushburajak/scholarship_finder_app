@@ -5,8 +5,6 @@ import 'package:scholarshuip_finder_app/app/di/di.dart';
 import 'package:scholarshuip_finder_app/core/common/snackbar/my_snackbar.dart';
 import 'package:scholarshuip_finder_app/features/auth/domain/use_case/login_usecase.dart';
 import 'package:scholarshuip_finder_app/features/auth/presentation/view_model/signup/register_bloc.dart';
-import 'package:scholarshuip_finder_app/features/batch/presentation/view_model/batch_bloc.dart';
-import 'package:scholarshuip_finder_app/features/course/presentation/view_model/course_bloc.dart';
 import 'package:scholarshuip_finder_app/features/home/presentation/view/home_view.dart';
 import 'package:scholarshuip_finder_app/features/home/presentation/view_model/home_cubit.dart';
 
@@ -33,8 +31,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           MaterialPageRoute(
             builder: (context) => MultiBlocProvider(
               providers: [
-                BlocProvider.value(value: getIt<CourseBloc>()),
-                BlocProvider.value(value: getIt<BatchBloc>()),
                 BlocProvider.value(value: _registerBloc),
               ],
               child: event.destination,

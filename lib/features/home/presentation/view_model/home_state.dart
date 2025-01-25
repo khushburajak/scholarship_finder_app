@@ -1,11 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scholarshuip_finder_app/app/di/di.dart';
-import 'package:scholarshuip_finder_app/features/batch/presentation/view/batch_view.dart';
-import 'package:scholarshuip_finder_app/features/batch/presentation/view_model/batch_bloc.dart';
-import 'package:scholarshuip_finder_app/features/course/presentation/view/course_view.dart';
-import 'package:scholarshuip_finder_app/features/course/presentation/view_model/course_bloc.dart';
 
 class HomeState extends Equatable {
   final int selectedIndex;
@@ -23,14 +17,6 @@ class HomeState extends Equatable {
       views: [
         const Center(
           child: Text('Dashboard'),
-        ),
-        BlocProvider(
-          create: (context) => getIt<CourseBloc>(),
-          child: CourseView(),
-        ),
-        BlocProvider(
-          create: (context) => getIt<BatchBloc>(),
-          child: BatchView(),
         ),
         const Center(
           child: Text('Account'),

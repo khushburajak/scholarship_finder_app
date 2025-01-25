@@ -2,16 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:scholarshuip_finder_app/app/constants/hive_table_constant.dart';
 import 'package:scholarshuip_finder_app/features/auth/domain/entity/auth_entity.dart';
-import 'package:scholarshuip_finder_app/features/batch/data/model/batch_hive_model.dart';
-import 'package:scholarshuip_finder_app/features/course/data/model/course_hive_model.dart';
 import 'package:uuid/uuid.dart';
 
 part 'auth_hive_model.g.dart';
 
-@HiveType(typeId: HiveTableConstant.studentTableId)
+@HiveType(typeId: HiveTableConstant.userTableId)
 class AuthHiveModel extends Equatable {
   @HiveField(0)
-  final String? studentId;
+  final String? userId;
   @HiveField(1)
   final String fName;
   @HiveField(2)
@@ -26,18 +24,18 @@ class AuthHiveModel extends Equatable {
   final String password;
 
   AuthHiveModel({
-    String? studentId,
+    String? userId,
     required this.fName,
     required this.lName,
     this.image,
     required this.phone,
     required this.username,
     required this.password,
-  }) : studentId = studentId ?? const Uuid().v4();
+  }) : userId = userId ?? const Uuid().v4();
 
   // Initial Constructor
   const AuthHiveModel.initial()
-      : studentId = '',
+      : userId = '',
         fName = '',
         lName = '',
         image = '',
@@ -48,7 +46,7 @@ class AuthHiveModel extends Equatable {
   // From Entity
   factory AuthHiveModel.fromEntity(AuthEntity entity) {
     return AuthHiveModel(
-      studentId: entity.userId,
+      userId: entity.userId,
       fName: entity.fName,
       lName: entity.lName,
       image: entity.image,
@@ -61,7 +59,7 @@ class AuthHiveModel extends Equatable {
   // To Entity
   AuthEntity toEntity() {
     return AuthEntity(
-      userId: studentId,
+      userId: userId,
       fName: fName,
       lName: lName,
       image: image,
@@ -73,5 +71,5 @@ class AuthHiveModel extends Equatable {
 
   @override
   List<Object?> get props =>
-      [studentId, fName, lName, image, username, password];
+      [userId, fName, lName, image, username, password];
 }

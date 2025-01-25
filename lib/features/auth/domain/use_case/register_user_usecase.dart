@@ -4,8 +4,6 @@ import 'package:scholarshuip_finder_app/app/usecase/usecase.dart';
 import 'package:scholarshuip_finder_app/core/error/failure.dart';
 import 'package:scholarshuip_finder_app/features/auth/domain/entity/auth_entity.dart';
 import 'package:scholarshuip_finder_app/features/auth/domain/repository/auth_repository.dart';
-import 'package:scholarshuip_finder_app/features/batch/domain/entity/batch_entity.dart';
-import 'package:scholarshuip_finder_app/features/course/domain/entity/course_entity.dart';
 
 class RegisterUserParams extends Equatable {
   final String fname;
@@ -32,8 +30,7 @@ class RegisterUserParams extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [fname, lname, phone, username, password];
+  List<Object?> get props => [fname, lname, phone, username, password];
 }
 
 class RegisterUseCase implements UsecaseWithParams<void, RegisterUserParams> {
@@ -50,6 +47,6 @@ class RegisterUseCase implements UsecaseWithParams<void, RegisterUserParams> {
       username: params.username,
       password: params.password,
     );
-    return repository.registerStudent(authEntity);
+    return repository.registerUser(authEntity);
   }
 }

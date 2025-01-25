@@ -3,24 +3,16 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:scholarshuip_finder_app/core/common/snackbar/my_snackbar.dart';
 import 'package:scholarshuip_finder_app/features/auth/domain/use_case/register_user_usecase.dart';
-import 'package:scholarshuip_finder_app/features/batch/presentation/view_model/batch_bloc.dart';
-import 'package:scholarshuip_finder_app/features/course/presentation/view_model/course_bloc.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  final BatchBloc _batchBloc;
-  final CourseBloc _courseBloc;
   final RegisterUseCase _registerUseCase;
 
   RegisterBloc({
-    required BatchBloc batchBloc,
-    required CourseBloc courseBloc,
     required RegisterUseCase registerUseCase,
-  })  : _batchBloc = batchBloc,
-        _courseBloc = courseBloc,
-        _registerUseCase = registerUseCase,
+  })  : _registerUseCase = registerUseCase,
         super(RegisterState.initial()) {
     on<LoadCoursesAndBatches>(_onLoadCoursesAndBatches);
     on<RegisterStudent>(_onRegisterEvent);
@@ -33,8 +25,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     Emitter<RegisterState> emit,
   ) {
     emit(state.copyWith(isLoading: true));
-    _batchBloc.add(LoadBatches());
-    _courseBloc.add(CourseLoad());
     emit(state.copyWith(isLoading: false, isSuccess: true));
   }
 
