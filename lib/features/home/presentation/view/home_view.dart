@@ -32,31 +32,6 @@ class HomeView extends StatelessWidget {
           ),
         ],
       ),
-      // appBar: AppBar(
-      //   title: const Text(
-      //     'Home',
-      //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-      //   ),
-      //   automaticallyImplyLeading: false, // Removes the default back button
-      //   actions: [
-      //     // Logout button with enhanced design
-      //     IconButton(
-      //       icon: const Icon(Icons.logout, size: 28),
-      //       onPressed: () {
-      //         // Logout code
-
-      //         showMySnackBar(
-      //           context: context,
-      //           message: 'Logging out...',
-      //           color: Colors.red,
-      //         );
-
-      //         context.read<HomeCubit>().logout(context);
-      //       },
-      //     ),
-      //   ],
-      //   elevation: 0,
-      //   backgroundColor: Theme.of(context).primaryColor,
       // ),
       body: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
         return AnimatedSwitcher(
@@ -73,16 +48,16 @@ class HomeView extends StatelessWidget {
               label: 'Dashboard',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.book),
-              label: 'Course',
+              icon: Icon(Icons.school_rounded),
+              label: 'University',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.group),
-              label: 'Batch',
+              icon: Icon(Icons.school),
+              label: 'Scholarship',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle),
-              label: 'Account',
+              label: 'Profile',
             ),
           ],
           currentIndex: state.selectedIndex,

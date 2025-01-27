@@ -7,14 +7,13 @@ class HiveService {
   static Future<void> init() async {
     // Initialize the database
     var directory = await getApplicationDocumentsDirectory();
-    var path = '${directory.path}softwarica_student_management.db';
+    var path = '${directory.path}scholarship_finder.db';
 
     Hive.init(path);
 
     // Register Adapters
     Hive.registerAdapter(AuthHiveModelAdapter());
   }
-
 
   // Auth Queries
   Future<void> register(AuthHiveModel auth) async {
@@ -42,7 +41,6 @@ class HiveService {
   }
 
   Future<void> clearAll() async {
-
     await Hive.deleteBoxFromDisk(HiveTableConstant.userBox);
   }
 

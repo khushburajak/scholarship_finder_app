@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scholarshuip_finder_app/app/di/di.dart';
+import 'package:scholarshuip_finder_app/features/auth/domain/use_case/register_user_usecase.dart';
 import 'package:scholarshuip_finder_app/features/auth/presentation/view/register_view.dart';
 import 'package:scholarshuip_finder_app/features/auth/presentation/view_model/login/login_bloc.dart';
+import 'package:scholarshuip_finder_app/features/auth/presentation/view_model/signup/register_bloc.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
@@ -151,7 +154,12 @@ class LoginView extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RegisterView(),
+                            builder: (context) => BlocProvider(
+                              create: (_) => RegisterBloc(
+                                registerUseCase: getIt<RegisterUseCase>(),
+                              ),
+                              child: const RegisterView(),
+                            ),
                           ),
                         );
                       },
