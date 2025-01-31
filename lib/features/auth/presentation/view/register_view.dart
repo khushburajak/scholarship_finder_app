@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scholarshuip_finder_app/features/auth/presentation/view_model/signup/register_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:image_picker/image_picker.dart';
+
+import 'dart:io';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -17,6 +21,34 @@ class _RegisterViewState extends State<RegisterView> {
   final _phoneController = TextEditingController();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  // Check for camera permission
+  Future<void> checkCameraPermission() async {
+    if (await Permission.camera.request().isRestricted ||
+        await Permission.camera.request().isDenied) {
+      await Permission.camera.request();
+    }
+  }
+
+  File? _img;
+  Future _browseImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        setState(() {
+          _img = File(image.path);
+          // Send image to server
+          context.read<RegisterBloc>().add(
+                UploadImage(file: _img!),
+              );
+        });
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,17 +91,19 @@ class _RegisterViewState extends State<RegisterView> {
                             children: [
                               ElevatedButton.icon(
                                 onPressed: () {
+                                  checkCameraPermission();
+                                  _browseImage(ImageSource.camera);
                                   Navigator.pop(context);
-                                  // Implement image upload from camera
                                 },
-                                icon: const Icon(Icons.camera_alt_outlined),
+                                icon: const Icon(Icons.camera),
                                 label: const Text('Camera'),
                               ),
                               ElevatedButton.icon(
                                 onPressed: () {
-                                  // Implement image upload from gallery
+                                  _browseImage(ImageSource.gallery);
+                                  Navigator.pop(context);
                                 },
-                                icon: const Icon(Icons.photo_library_outlined),
+                                icon: const Icon(Icons.image),
                                 label: const Text('Gallery'),
                               ),
                             ],
@@ -79,8 +113,7 @@ class _RegisterViewState extends State<RegisterView> {
                     },
                     child: CircleAvatar(
                       radius: 50,
-                      backgroundImage: const AssetImage(
-                          'assets/images/profile.png'), // Replace with default profile image
+                      backgroundImage: _img != null ? FileImage(_img!) : null,
                       child: const Align(
                         alignment: Alignment.bottomRight,
                         child: Icon(
@@ -192,7 +225,7 @@ class _RegisterViewState extends State<RegisterView> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           context.read<RegisterBloc>().add(
-                                RegisterStudent(
+                                RegisterUser(
                                   context: context,
                                   fName: _fnameController.text,
                                   lName: _lnameController.text,

@@ -156,7 +156,7 @@ class LoginView extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
                               create: (_) => RegisterBloc(
-                                registerUseCase: getIt<RegisterUseCase>(),
+                                registerUseCase: getIt<RegisterUseCase>(), uploadImageUsecase: null,
                               ),
                               child: const RegisterView(),
                             ),

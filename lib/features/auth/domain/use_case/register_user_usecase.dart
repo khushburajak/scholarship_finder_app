@@ -11,6 +11,8 @@ class RegisterUserParams extends Equatable {
   final String phone;
   final String username;
   final String password;
+  final String? image;  
+
 
   const RegisterUserParams({
     required this.fname,
@@ -18,6 +20,7 @@ class RegisterUserParams extends Equatable {
     required this.phone,
     required this.username,
     required this.password,
+    this.image,
   });
 
   //intial constructor
@@ -27,6 +30,7 @@ class RegisterUserParams extends Equatable {
     required this.phone,
     required this.username,
     required this.password,
+    this.image,
   });
 
   @override
@@ -46,6 +50,7 @@ class RegisterUseCase implements UsecaseWithParams<void, RegisterUserParams> {
       phone: params.phone,
       username: params.username,
       password: params.password,
+      image: params.image,
     );
     return repository.registerUser(authEntity);
   }

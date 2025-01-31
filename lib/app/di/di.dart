@@ -4,11 +4,11 @@ import 'package:scholarshuip_finder_app/features/auth/data/data_source/local_dat
 import 'package:scholarshuip_finder_app/features/auth/data/repository/auth_local_repository/auth_local_repository.dart';
 import 'package:scholarshuip_finder_app/features/auth/domain/use_case/login_usecase.dart';
 import 'package:scholarshuip_finder_app/features/auth/domain/use_case/register_user_usecase.dart';
+import 'package:scholarshuip_finder_app/features/auth/domain/use_case/upload_image_usecase.dart';
 import 'package:scholarshuip_finder_app/features/auth/presentation/view_model/login/login_bloc.dart';
 import 'package:scholarshuip_finder_app/features/auth/presentation/view_model/signup/register_bloc.dart';
 import 'package:scholarshuip_finder_app/features/home/presentation/view_model/home_cubit.dart';
 import 'package:scholarshuip_finder_app/features/onboarding/presentation/view_model/onboarding_bloc.dart';
-import 'package:scholarshuip_finder_app/features/onboarding/presentation/view_model/onboarding_state.dart';
 import 'package:scholarshuip_finder_app/features/splash/presentation/view_model/splash_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -22,11 +22,18 @@ Future<void> initDependencies() async {
   await _initRegisterDependencies();
   await _initLoginDependencies();
   await _initSplashScreenDependencies();
-  await _initOnboardingDependencies(); // Add onboarding dependencies
+  await _initOnboardingDependencies(); // Add onboarding dependencies4
+  await _initUploadImageDependencies();
 }
 
 _initHiveService() {
   getIt.registerLazySingleton<HiveService>(() => HiveService());
+}
+
+_initUploadImageDependencies() async {
+  getIt.registerFactory<UploadImageUsecase>(
+    () => UploadImageUsecase(getIt<AuthLocalRepository>()),
+  );
 }
 
 _initRegisterDependencies() {
@@ -45,6 +52,7 @@ _initRegisterDependencies() {
   getIt.registerFactory<RegisterBloc>(
     () => RegisterBloc(
       registerUseCase: getIt(),
+      uploadImageUsecase: getIt(),
     ),
   );
 }
