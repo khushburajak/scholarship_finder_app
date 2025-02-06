@@ -12,7 +12,7 @@ class TokenSharedPrefs {
       await _sharedPreferences.setString('token', token);
       return Right(null);
     } catch (e) {
-      return Left(SharedPrefsFailure(message: e.toString()));
+      return Left(SharedPrefsFailure( e.toString()));
     }
   }
 
@@ -21,7 +21,7 @@ class TokenSharedPrefs {
       final token = _sharedPreferences.getString('token');
       return Right(token ?? '');
     } catch (e) {
-      return Left(SharedPrefsFailure(message: e.toString()));
+      return Left(SharedPrefsFailure( e.toString()));
     }
   }
 }

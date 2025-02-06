@@ -53,7 +53,8 @@ class AuthRepositorySelector implements IAuthRepository {
       return _remoteRepository.uploadProfilePicture(file);
     } else {
       return Left(LocalDatabaseFailure(
-          message: "Network required to upload profile picture"));
+          "No internet connection. Please connect to the internet and try again"));
+          
     }
   }
 }

@@ -17,7 +17,7 @@ class AuthLocalRepository implements IAuthRepository {
       final currentUser = await _authLocalDataSource.getCurrentUser();
       return Right(currentUser);
     } catch (e) {
-      return Left(LocalDatabaseFailure(message: e.toString()));
+      return Left(LocalDatabaseFailure(e.toString()));
     }
   }
 
@@ -30,7 +30,7 @@ class AuthLocalRepository implements IAuthRepository {
       final token = await _authLocalDataSource.loginUser(email, password);
       return Right(token);
     } catch (e) {
-      return Left(LocalDatabaseFailure(message: e.toString()));
+      return Left(LocalDatabaseFailure(e.toString()));
     }
   }
 
@@ -39,7 +39,7 @@ class AuthLocalRepository implements IAuthRepository {
     try {
       return Right(_authLocalDataSource.registerUser(user));
     } catch (e) {
-      return Left(LocalDatabaseFailure(message: e.toString()));
+      return Left(LocalDatabaseFailure(e.toString()));
     }
   }
 

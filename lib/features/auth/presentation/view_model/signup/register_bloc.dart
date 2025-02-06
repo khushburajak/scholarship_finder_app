@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scholarshuip_finder_app/app/di/di.dart';
 import 'package:scholarshuip_finder_app/core/common/snackbar/my_snackbar.dart';
+import 'package:scholarshuip_finder_app/features/auth/data/repository/auth_local_repository/auth_local_repository.dart';
 import 'package:scholarshuip_finder_app/features/auth/domain/use_case/login_usecase.dart';
 import 'package:scholarshuip_finder_app/features/auth/domain/use_case/register_user_usecase.dart';
 import 'package:scholarshuip_finder_app/features/auth/domain/use_case/upload_image_usecase.dart';
@@ -22,7 +23,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     required RegisterUseCase registerUseCase,
     required UploadImageUsecase? uploadImageUsecase,
   })  : _registerUseCase = registerUseCase,
-        _uploadImageUsecase = uploadImageUsecase!,
+        _uploadImageUsecase = uploadImageUsecase ??
+            UploadImageUsecase(getIt<AuthLocalRepository>()),
         super(RegisterState.initial()) {
     on<RegisterUser>(_onRegisterEvent);
     on<UploadImage>(_onLoadImage);
@@ -55,8 +57,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
               builder: (context) => BlocProvider(
                 create: (_) => LoginBloc(
                   loginUseCase: getIt<LoginUseCase>(),
-                  registerBloc: getIt<RegisterBloc>(),
-                  homeCubit: getIt(),
                 ),
                 child: LoginView(),
               ),

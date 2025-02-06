@@ -5,6 +5,7 @@ import 'package:scholarshuip_finder_app/features/auth/domain/use_case/register_u
 import 'package:scholarshuip_finder_app/features/auth/presentation/view/register_view.dart';
 import 'package:scholarshuip_finder_app/features/auth/presentation/view_model/login/login_bloc.dart';
 import 'package:scholarshuip_finder_app/features/auth/presentation/view_model/signup/register_bloc.dart';
+import 'package:scholarshuip_finder_app/features/home/presentation/view/home_view.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
@@ -107,6 +108,14 @@ class LoginView extends StatelessWidget {
                                         context: context,
                                         username: _usernameController.text,
                                         password: _passwordController.text,
+                                        onSuccess: () {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    const HomeView()),
+                                          );
+                                        },
                                       ),
                                     );
                               }
@@ -156,7 +165,8 @@ class LoginView extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
                               create: (_) => RegisterBloc(
-                                registerUseCase: getIt<RegisterUseCase>(), uploadImageUsecase: null,
+                                registerUseCase: getIt<RegisterUseCase>(),
+                                uploadImageUsecase: null,
                               ),
                               child: const RegisterView(),
                             ),

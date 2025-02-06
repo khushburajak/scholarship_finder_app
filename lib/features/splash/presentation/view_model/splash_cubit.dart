@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scholarshuip_finder_app/features/onboarding/presentation/view/onboarding_view.dart.dart';
+import 'package:scholarshuip_finder_app/features/onboarding/presentation/view/onboarding_view.dart';
 import 'package:scholarshuip_finder_app/features/onboarding/presentation/view_model/onboarding_bloc.dart';
 
 class SplashCubit extends Cubit<void> {
-  SplashCubit(this._onboardingCubit) : super(null);
+  final OnboardingBloc _onboardingBloc;
 
-  final OnboardingBloc _onboardingCubit;
+  SplashCubit(this._onboardingBloc) : super(null);
 
   Future<void> init(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 4), () async {
-      // Open Login page or Onboarding Screen
+    await Future.delayed(const Duration(seconds: 3)); // Reduced delay to 3s for better UX
+    if (!context.mounted) return;
 
-      if (context.mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BlocProvider.value(
-              value: _onboardingCubit,
-              child: OnboardingView(),
-            ),
-          ),
-        );
-      }
-    });
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => BlocProvider.value(
+          value: _onboardingBloc,
+          child: const OnboardingView(),
+        ),
+      ),
+    );
   }
 }

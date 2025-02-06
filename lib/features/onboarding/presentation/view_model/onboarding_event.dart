@@ -21,5 +21,8 @@ class NavigateToLoginEvent extends OnboardingEvent {
   final BuildContext context;
   final Widget destination;
 
-  NavigateToLoginEvent({required this.context, required this.destination});
+  const NavigateToLoginEvent({required this.context, required this.destination});
+
+  @override
+  List<Object?> get props => [context, destination];
 }

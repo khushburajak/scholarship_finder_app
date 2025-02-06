@@ -13,36 +13,27 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    context.read<SplashCubit>().init(context);
+    BlocProvider.of<SplashCubit>(context, listen: false).init(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Stack(
-        children: [
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 200,
-                  width: 200,
-                  child: Image.asset('assets/images/splash.jpg'),
-                ),
-                const Text(
-                  'Scholarship Finder APP',
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const CircularProgressIndicator(),
-              ],
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/splash.jpg', height: 200, width: 200),
+            const SizedBox(height: 10),
+            const Text(
+              'Scholarship Finder APP',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-          ),
-        ],
+            const SizedBox(height: 20),
+            const CircularProgressIndicator(),
+          ],
+        ),
       ),
     );
   }
