@@ -13,12 +13,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   LoginBloc({required LoginUseCase loginUseCase})
       : _loginUseCase = loginUseCase,
-        super( LoginState(isLoading: false, isSuccess: false)) {
-    on<LoginStudentEvent>(_onLoginStudent);
+        super(LoginState(isLoading: false, isSuccess: false)) {
+    on<LoginUserEvent>(_onLoginStudent);
   }
 
   Future<void> _onLoginStudent(
-      LoginStudentEvent event, Emitter<LoginState> emit) async {
+      LoginUserEvent event, Emitter<LoginState> emit) async {
     emit(state.copyWith(isLoading: true));
 
     final result = await _loginUseCase(

@@ -19,11 +19,11 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       Navigator.push(
         event.context,
         MaterialPageRoute(
-          builder: (context) => MultiBlocProvider(
-            providers: [
-              BlocProvider.value(value: _loginBloc),
-            ],
-            child: event.destination,
+          builder: (context) => 
+            BlocProvider.value(
+              value: _loginBloc,
+              child: event.destination,
+
           ),
         ),
       );

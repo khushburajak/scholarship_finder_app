@@ -17,8 +17,7 @@ class OnboardingView extends StatelessWidget {
       body: BlocConsumer<OnboardingBloc, OnboardingState>(
         listener: (context, state) {
           if (state.navigateToLogin) {
-            // Navigate to login when `navigateToLogin` is true
-            Navigator.pushReplacementNamed(context, '/login');
+            // 
           }
         },
         builder: (context, state) {

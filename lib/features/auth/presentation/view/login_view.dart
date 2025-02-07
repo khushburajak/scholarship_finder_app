@@ -104,7 +104,7 @@ class LoginView extends StatelessWidget {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 context.read<LoginBloc>().add(
-                                      LoginStudentEvent(
+                                      LoginUserEvent(
                                         context: context,
                                         username: _usernameController.text,
                                         password: _passwordController.text,
